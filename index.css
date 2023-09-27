@@ -1,0 +1,103 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  /* sets base font size to 10px */
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  padding: 5rem;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.container {
+  display: flex;
+  background: rgb(179, 179, 179);
+  flex-direction: column;
+  border-radius: 1rem;
+  align-items: center;
+  width: 52rem;
+  padding: 5rem 2.5rem;
+  gap: 2rem;
+}
+
+.container .screen {
+  width: 45rem;
+  height: 15rem;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.container .screen .inputScreen,
+.container .screen .resultScreen {
+}
+
+.container .screen,
+button {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+}
+
+button {
+  padding: 2rem;
+  width: 10.75rem;
+  margin: 0.5rem;
+  font-size: 3rem;
+}
+
+button.long {
+  width: 22.5rem;
+}
+
+button.long.ac {
+  background: rgb(224, 144, 144);
+}
+
+button.long.c {
+  background: rgb(155, 190, 225);
+}
+
+button:hover {
+  cursor: pointer;
+  background: rgb(215, 215, 215);
+}
+
+button.long.ac:hover {
+  background: rgb(233, 120, 120);
+}
+
+button.long.c:hover {
+  background: rgb(104, 166, 228);
+}
+
+.input {
+  text-align: right;
+  height: 5rem;
+  width: 44rem;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.input.secondary {
+  height: 5rem;
+  font-size: 2rem;
+}
+
+.input.main {
+  height: 7rem;
+  font-size: 4rem;
+}
