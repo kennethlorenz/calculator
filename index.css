@@ -42,10 +42,6 @@ body {
   flex-wrap: wrap;
 }
 
-.container .screen .inputScreen,
-.container .screen .resultScreen {
-}
-
 .container .screen,
 button {
   border: 1px solid black;
