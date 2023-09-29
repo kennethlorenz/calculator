@@ -4,6 +4,7 @@ var operator;
 document.querySelector(".currentYear").textContent = new Date().getFullYear();
 const input = document.querySelector(".input.main");
 const acButton = document.querySelector(".ac");
+var firstNumberDuplicate = "";
 var buttons = document.querySelectorAll(".btn");
 
 function add(firstNumber, secondNumber) {
@@ -32,24 +33,32 @@ function operate(firstNumber, operator, secondNumber) {
 }
 
 function displayInput(e) {
+  //
   if (e.target.innerHTML == 0 && input.innerHTML.startsWith("0")) {
-    console.log("0 clicked");
     return;
   } else if (e.target.innerHTML == "." && input.innerHTML.startsWith("0")) {
     firstNumber += 0 + ".";
     input.innerHTML = firstNumber;
   } else if (e.target.innerHTML == "." && input.innerHTML.indexOf(".") !== -1) {
     return;
+  } else if (firstNumberDuplicate.length >= 20) {
+    firstNumber += e.target.innerHTML;
+    firstNumberDuplicate = firstNumber;
+    input.innerHTML = convertToExponential(firstNumber);
   } else {
     firstNumber += e.target.innerHTML;
+    firstNumberDuplicate = firstNumber;
     input.innerHTML = firstNumber;
   }
-  console.log(firstNumber);
+}
+
+function convertToExponential(number) {
+  return parseFloat(number).toExponential(2);
 }
 
 function allClear() {
-  firstNumber = "0";
-  input.innerHTML = firstNumber;
+  firstNumber = "";
+  input.innerHTML = "0";
 }
 buttons.forEach((button) => button.addEventListener("click", displayInput));
 acButton.addEventListener("click", allClear);
