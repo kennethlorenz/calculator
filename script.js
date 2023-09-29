@@ -1,11 +1,15 @@
 var firstNumber = "";
 var secondNumber;
-var operator;
+var operator = "";
+var firstNumberDuplicate = "";
 document.querySelector(".currentYear").textContent = new Date().getFullYear();
 const input = document.querySelector(".input.main");
-const acButton = document.querySelector(".ac");
-var firstNumberDuplicate = "";
+const allClearButton = document.querySelector(".ac");
+const clearButton = document.querySelector(".c");
 var buttons = document.querySelectorAll(".btn");
+var operators = document.querySelectorAll(".operator");
+var resultScreen = document.querySelector(".input.result");
+var inputDisplay = "";
 
 function add(firstNumber, secondNumber) {
   return firstNumber + secondNumber;
@@ -58,7 +62,28 @@ function convertToExponential(number) {
 
 function allClear() {
   firstNumber = "";
+  firstNumberDuplicate = "";
   input.innerHTML = "0";
 }
+
+function clear() {
+  firstNumber = input.innerHTML.slice(0, -1);
+  console.log(firstNumber);
+  input.innerHTML = firstNumber;
+  if (input.innerHTML === "") {
+    allClear();
+  }
+}
+
+function operatorClicked(e) {
+  console.log(e.target.innerHTML);
+  inputDisplay = `${firstNumber} ${e.target.innerHTML}`;
+  resultScreen.textContent = inputDisplay;
+}
 buttons.forEach((button) => button.addEventListener("click", displayInput));
-acButton.addEventListener("click", allClear);
+allClearButton.addEventListener("click", allClear);
+operators.forEach((operator) =>
+  operator.addEventListener("click", operatorClicked)
+);
+
+clearButton.addEventListener("click", clear);
