@@ -11,7 +11,7 @@ const equalButton = document.querySelector(".equal");
 var buttons = document.querySelectorAll(".btn");
 var operators = document.querySelectorAll(".operator");
 var resultScreen = document.querySelector(".input.result");
-var inputDisplay = "";
+var resultScreenDisplay = "";
 
 function add(firstNumber, secondNumber) {
   return firstNumber + secondNumber;
@@ -41,8 +41,8 @@ function operate(firstNumber, operator, secondNumber) {
 }
 
 function updateDisplay(firstNumber, operator, secondNumber) {
-  inputDisplay = `${firstNumber} ${operator} ${secondNumber} =`;
-  resultScreen.textContent = inputDisplay;
+  resultScreenDisplay = `${firstNumber} ${operator} ${secondNumber} =`;
+  resultScreen.textContent = resultScreenDisplay;
 }
 
 function displayInput(e) {
@@ -98,11 +98,11 @@ function clear() {
 function operatorClicked(e) {
   operator = e.target.textContent;
   if (input.textContent === "0") {
-    inputDisplay = `${0} ${e.target.textContent}`;
+    resultScreenDisplay = `${0} ${e.target.textContent}`;
   } else {
-    inputDisplay = `${firstNumber} ${operator}`;
+    resultScreenDisplay = `${firstNumber} ${operator}`;
   }
-  resultScreen.textContent = inputDisplay;
+  resultScreen.textContent = resultScreenDisplay;
 }
 
 function calculate() {
