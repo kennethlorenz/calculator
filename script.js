@@ -2,11 +2,12 @@ var firstNumber = "";
 var secondNumber = "";
 var operator = "";
 var firstNumberDuplicate = "";
+var result = "";
 document.querySelector(".currentYear").textContent = new Date().getFullYear();
 const input = document.querySelector(".input.main");
 const allClearButton = document.querySelector(".ac");
 const clearButton = document.querySelector(".c");
-const equalButton = document.querySelector(".operator.equal");
+const equalButton = document.querySelector(".equal");
 var buttons = document.querySelectorAll(".btn");
 var operators = document.querySelectorAll(".operator");
 var resultScreen = document.querySelector(".input.result");
@@ -26,37 +27,50 @@ function divide(firstNumber, secondNumber) {
 }
 
 function operate(firstNumber, operator, secondNumber) {
+  var firstNum = parseInt(firstNumber);
+  var secondNum = parseInt(secondNumber);
   if (operator == "+") {
-    return add(firstNumber, secondNumber);
+    return add(firstNum, secondNum);
   } else if (operator == "-") {
-    return subtract(firstNumber, secondNumber);
+    return subtract(firstNum, secondNum);
   } else if (operator == "*") {
-    return multiply(firstNumber, secondNumber);
+    return multiply(firstNum, secondNum);
   } else if (operator == "/") {
-    return divide(firstNumber, secondNumber);
+    return divide(firstNum, secondNum);
   }
+}
+
+function updateDisplay(firstNumber, operator, secondNumber) {
+  inputDisplay = `${firstNumber} ${operator} ${secondNumber} =`;
+  resultScreen.textContent = inputDisplay;
 }
 
 function displayInput(e) {
   //
-  if (e.target.innerHTML == 0 && input.innerHTML.startsWith("0")) {
+  if (e.target.textContent == 0 && input.textContent.startsWith("0")) {
     return;
-  } else if (e.target.innerHTML == "." && input.innerHTML.startsWith("0")) {
+  } else if (e.target.textContent == "." && input.textContent.startsWith("0")) {
     firstNumber += 0 + ".";
-    input.innerHTML = firstNumber;
-  } else if (e.target.innerHTML == "." && input.innerHTML.indexOf(".") !== -1) {
+    input.textContent = firstNumber;
+  } else if (
+    e.target.textContent == "." &&
+    input.textContent.indexOf(".") !== -1
+  ) {
     return;
   } else if (firstNumberDuplicate.length >= 20) {
-    firstNumber += e.target.innerHTML;
+    firstNumber += e.target.textContent;
     firstNumberDuplicate = firstNumber;
-    input.innerHTML = convertToExponential(firstNumber);
-  } else if (resultScreen.textContent.length >= 1) {
-    secondNumber += e.target.innerHTML;
-    input.innerHTML = secondNumber;
+    input.textContent = convertToExponential(firstNumber);
+  } else if (
+    resultScreen.textContent.length >= 1 ||
+    resultScreen.textContent === "0"
+  ) {
+    secondNumber += e.target.textContent;
+    input.textContent = secondNumber;
   } else {
-    firstNumber += e.target.innerHTML;
+    firstNumber += e.target.textContent;
     firstNumberDuplicate = firstNumber;
-    input.innerHTML = firstNumber;
+    input.textContent = firstNumber;
   }
 }
 
@@ -67,28 +81,38 @@ function convertToExponential(number) {
 function allClear() {
   firstNumber = "";
   firstNumberDuplicate = "";
-  input.innerHTML = "0";
+  secondNumber = "";
+  input.textContent = "0";
   resultScreen.textContent = "";
 }
 
 function clear() {
-  firstNumber = input.innerHTML.slice(0, -1);
+  firstNumber = input.textContent.slice(0, -1);
   console.log(firstNumber);
-  input.innerHTML = firstNumber;
-  if (input.innerHTML === "") {
-    allClear();
+  input.textContent = firstNumber;
+  if (input.textContent === "") {
+    input.textContent = 0;
   }
 }
 
 function operatorClicked(e) {
-  console.log(e.target.innerHTML);
+  operator = e.target.textContent;
   if (input.textContent === "0") {
-    inputDisplay = `${0} ${e.target.innerHTML}`;
+    inputDisplay = `${0} ${e.target.textContent}`;
   } else {
-    inputDisplay = `${firstNumber} ${e.target.innerHTML}`;
+    inputDisplay = `${firstNumber} ${operator}`;
   }
   resultScreen.textContent = inputDisplay;
 }
+
+function calculate() {
+  updateDisplay(firstNumber, operator, secondNumber);
+  result = operate(firstNumber, operator, secondNumber);
+  input.textContent = result;
+  secondNumber = "";
+  firstNumber = result;
+}
+
 buttons.forEach((button) => button.addEventListener("click", displayInput));
 allClearButton.addEventListener("click", allClear);
 operators.forEach((operator) =>
@@ -96,3 +120,4 @@ operators.forEach((operator) =>
 );
 
 clearButton.addEventListener("click", clear);
+equalButton.addEventListener("click", calculate);
