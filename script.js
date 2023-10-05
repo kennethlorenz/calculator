@@ -1,11 +1,12 @@
 var firstNumber = "";
-var secondNumber;
+var secondNumber = "";
 var operator = "";
 var firstNumberDuplicate = "";
 document.querySelector(".currentYear").textContent = new Date().getFullYear();
 const input = document.querySelector(".input.main");
 const allClearButton = document.querySelector(".ac");
 const clearButton = document.querySelector(".c");
+const equalButton = document.querySelector(".operator.equal");
 var buttons = document.querySelectorAll(".btn");
 var operators = document.querySelectorAll(".operator");
 var resultScreen = document.querySelector(".input.result");
@@ -49,6 +50,9 @@ function displayInput(e) {
     firstNumber += e.target.innerHTML;
     firstNumberDuplicate = firstNumber;
     input.innerHTML = convertToExponential(firstNumber);
+  } else if (resultScreen.textContent.length >= 1) {
+    secondNumber += e.target.innerHTML;
+    input.innerHTML = secondNumber;
   } else {
     firstNumber += e.target.innerHTML;
     firstNumberDuplicate = firstNumber;
@@ -78,7 +82,11 @@ function clear() {
 
 function operatorClicked(e) {
   console.log(e.target.innerHTML);
-  inputDisplay = `${firstNumber} ${e.target.innerHTML}`;
+  if (input.textContent === "0") {
+    inputDisplay = `${0} ${e.target.innerHTML}`;
+  } else {
+    inputDisplay = `${firstNumber} ${e.target.innerHTML}`;
+  }
   resultScreen.textContent = inputDisplay;
 }
 buttons.forEach((button) => button.addEventListener("click", displayInput));
