@@ -64,6 +64,7 @@ function allClear() {
   firstNumber = "";
   firstNumberDuplicate = "";
   input.innerHTML = "0";
+  resultScreen.textContent = "";
 }
 
 function clear() {
