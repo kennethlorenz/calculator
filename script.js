@@ -144,6 +144,7 @@ function updateDisplay(firstNumber, operator, secondNumber) {
 }
 
 function updateSecondScreen(e) {
+  calculate();
   firstNumber = mainScreen.textContent;
   operator = e.target.textContent;
   secondScreenDisplay = `${firstNumber} ${operator}`;
