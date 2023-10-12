@@ -158,12 +158,12 @@ function calculate() {
   }
   if (!firstNumber == "" && !secondNumber == "") {
     console.log(mainScreen.textContent);
-    secondNumber = mainScreen.textContent;
     updateDisplay(firstNumber, operator, secondNumber);
     result = operate(firstNumber, operator, secondNumber);
     mainScreen.textContent = result;
     secondNumber = "";
     mainScreenDisplay = "";
+    firstNumber = "";
   }
   console.log(mainScreen.textContent);
 }
