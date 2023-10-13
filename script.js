@@ -29,8 +29,8 @@ function divide(firstNumber, secondNumber) {
 }
 
 function operate(firstNumber, operator, secondNumber) {
-  var firstNum = parseInt(firstNumber);
-  var secondNum = parseInt(secondNumber);
+  var firstNum = parseFloat(firstNumber);
+  var secondNum = parseFloat(secondNumber);
   if (operator == "+") {
     return add(firstNum, secondNum);
   } else if (operator == "-") {
@@ -161,6 +161,13 @@ function calculate() {
     console.log(mainScreen.textContent);
     updateDisplay(firstNumber, operator, secondNumber);
     result = operate(firstNumber, operator, secondNumber);
+
+    //check if the result's length is up to 5 e.g. 1.234 (5 characters = 3 decimal places)
+    //& if the result includes decimal, convert it to float with 2 decimal places.
+    if (result.toString().length >= 5 && result.toString().includes(".")) {
+      result = parseFloat(result).toFixed(2);
+      console.log("true");
+    }
     mainScreen.textContent = result;
     secondNumber = "";
     mainScreenDisplay = "";
