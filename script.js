@@ -156,8 +156,9 @@ function calculate() {
   secondNumber = mainScreen.textContent;
   if (secondNumber == "" && firstNumber == "") {
     return;
-  }
-  if (!firstNumber == "" && !secondNumber == "") {
+  } else if ((operator == "÷") & (secondNumber == "0")) {
+    alert("Can't divide by 0, Please enter a different number.");
+  } else if (!firstNumber == "" && !secondNumber == "") {
     console.log(mainScreen.textContent);
     updateDisplay(firstNumber, operator, secondNumber);
     result = operate(firstNumber, operator, secondNumber);
