@@ -16,7 +16,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 5rem;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .container {
@@ -98,14 +98,16 @@ button.long.c:active {
   padding: 1rem;
 }
 
-.input.secondary {
+.input.result {
   height: 5rem;
   font-size: 2rem;
+  font-weight: 500;
 }
 
 .input.main {
   height: 7rem;
   font-size: 3rem;
+  font-weight: 700;
 }
 
 footer {
