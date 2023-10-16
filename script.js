@@ -38,7 +38,6 @@ function operate(firstNumber, operator, secondNumber) {
   } else if (operator == "x") {
     return multiply(firstNum, secondNum);
   } else if (operator == "÷") {
-    console.log(divide(firstNum, secondNum));
     return divide(firstNum, secondNum);
   }
 }
@@ -54,14 +53,12 @@ function displayInput(e) {
   ) {
     mainScreenDisplay += e.target.textContent;
     mainScreen.textContent = mainScreenDisplay;
-    console.log("first if");
   }
   //allows user to enter only one 0 if the initial value is 0
   else if (
     e.target.textContent == 0 &&
     mainScreen.textContent.startsWith("0")
   ) {
-    console.log("second if");
     return;
   }
   //checks if the user clicks on decimal (.) and the initial value is 0
@@ -73,9 +70,7 @@ function displayInput(e) {
     //add 0 as a first value followed with a decimal.
     if (!mainScreen.textContent.includes(".")) {
       mainScreenDisplay = 0 + ".";
-      console.log("3rd if");
       mainScreen.textContent = mainScreenDisplay;
-      console.log(mainScreenDisplay);
     }
   }
   //checks if the user clicks on decimal (.) and if there's already a decimal on the input
@@ -103,7 +98,6 @@ function displayInput(e) {
     //set the initial value of the content to 0
     else if (e.target.textContent == "0" && mainScreenDisplay == "") {
       mainScreen.textContent = 0;
-      console.log("test");
       return;
     }
     //add the numbers into the input
@@ -113,7 +107,6 @@ function displayInput(e) {
       mainScreen.textContent = mainScreenDisplay;
     }
   }
-  console.log(mainScreen.textContent);
 }
 
 function displayInputByKeyboard(e) {
@@ -127,11 +120,9 @@ function displayInputByKeyboard(e) {
   ) {
     mainScreenDisplay += e.key;
     mainScreen.textContent = mainScreenDisplay;
-    console.log("first if");
   }
   //allows user to enter only one 0 if the initial value is 0
   else if (e.key == 0 && mainScreen.textContent.startsWith("0")) {
-    console.log("second if");
     return;
   }
   //checks if the user clicks on decimal (.) and the initial value is 0
@@ -140,9 +131,7 @@ function displayInputByKeyboard(e) {
     //add 0 as a first value followed with a decimal.
     if (!mainScreen.textContent.includes(".")) {
       mainScreenDisplay = 0 + ".";
-      console.log("3rd if");
       mainScreen.textContent = mainScreenDisplay;
-      console.log(mainScreenDisplay);
     }
   }
   //checks if the user clicks on decimal (.) and if there's already a decimal on the input
@@ -167,7 +156,6 @@ function displayInputByKeyboard(e) {
     //set the initial value of the content to 0
     else if (e.key == "0" && mainScreenDisplay == "") {
       mainScreen.textContent = 0;
-      console.log("test");
       return;
     }
     //add the numbers into the input
@@ -177,7 +165,6 @@ function displayInputByKeyboard(e) {
       mainScreen.textContent = mainScreenDisplay;
     }
   }
-  console.log(mainScreen.textContent);
 }
 
 function convertToExponential(number) {
@@ -195,7 +182,6 @@ function allClear() {
 
 function clear() {
   mainScreenDisplay = mainScreen.textContent.slice(0, -1);
-  console.log(firstNumber);
   mainScreen.textContent = mainScreenDisplay;
   if (mainScreen.textContent === "") {
     mainScreen.textContent = 0;
@@ -215,12 +201,14 @@ function updateSecondScreen(e) {
   secondScreen.textContent = secondScreenDisplay;
   mainScreenDisplay = "";
 }
-function updateSecondScreenByKey(e) {
+function updateSecondScreenByKey(op) {
   calculate();
-  if (e.key == "/") {
+  if (op == "/") {
     operator = "÷";
+  } else if (op == "*") {
+    operator = "x";
   } else {
-    operator = e.key;
+    operator = op;
   }
   firstNumber = mainScreen.textContent;
   secondScreenDisplay = `${firstNumber} ${operator}`;
@@ -235,22 +223,18 @@ function calculate() {
   } else if ((operator == "÷") & (secondNumber == "0")) {
     alert("Can't divide by 0, Please enter a different number.");
   } else if (!firstNumber == "" && !secondNumber == "") {
-    console.log(mainScreen.textContent);
     updateDisplay(firstNumber, operator, secondNumber);
     result = operate(firstNumber, operator, secondNumber);
-
     //check if the result's length is up to 5 e.g. 1.234 (5 characters = 3 decimal places)
     //& if the result includes decimal, convert it to float with 2 decimal places.
     if (result.toString().length >= 5 && result.toString().includes(".")) {
       result = parseFloat(result).toFixed(2);
-      console.log("true");
     }
     mainScreen.textContent = result;
     secondNumber = "";
     mainScreenDisplay = "";
     firstNumber = "";
   }
-  console.log(mainScreen.textContent);
 }
 
 buttons.forEach((button) => button.addEventListener("click", displayInput));
@@ -262,12 +246,16 @@ operators.forEach((operator) =>
 clearButton.addEventListener("click", clear);
 equalButton.addEventListener("click", calculate);
 window.addEventListener("keydown", (e) => {
-  //displayInputByKeyboard(e);
-  console.log(e.key);
   if (parseInt(e.key) >= 0 || parseInt(e.key) <= 9 || e.key == ".") {
     displayInputByKeyboard(e);
-  } else if (e.key == "+" || e.key == "-" || e.key == "x" || e.key == "/") {
-    updateSecondScreenByKey(e);
+  } else if (
+    e.key == "+" ||
+    e.key == "-" ||
+    e.key == "x" ||
+    e.key == "/" ||
+    e.key == "*"
+  ) {
+    updateSecondScreenByKey(e.key);
   } else if (e.key == "=" || e.key == "Enter") {
     calculate();
   } else if (e.key == "Backspace") {
