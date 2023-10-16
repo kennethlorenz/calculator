@@ -116,6 +116,70 @@ function displayInput(e) {
   console.log(mainScreen.textContent);
 }
 
+function displayInputByKeyboard(e) {
+  // Checks if the user has entered 0 after 0 and a decimal (.)
+  //Allows the user to enter zero after a decimal point
+  // 0.000000
+  if (
+    e.key == 0 &&
+    mainScreen.textContent.startsWith("0") &&
+    mainScreen.textContent.includes(".")
+  ) {
+    mainScreenDisplay += e.key;
+    mainScreen.textContent = mainScreenDisplay;
+    console.log("first if");
+  }
+  //allows user to enter only one 0 if the initial value is 0
+  else if (e.key == 0 && mainScreen.textContent.startsWith("0")) {
+    console.log("second if");
+    return;
+  }
+  //checks if the user clicks on decimal (.) and the initial value is 0
+  else if (e.key == "." && mainScreen.textContent.startsWith("0")) {
+    //if input doesn't have a decimal and a user clicks on decimal
+    //add 0 as a first value followed with a decimal.
+    if (!mainScreen.textContent.includes(".")) {
+      mainScreenDisplay = 0 + ".";
+      console.log("3rd if");
+      mainScreen.textContent = mainScreenDisplay;
+      console.log(mainScreenDisplay);
+    }
+  }
+  //checks if the user clicks on decimal (.) and if there's already a decimal on the input
+  //if there is we return as default
+  else if (e.key == "." && mainScreen.textContent.indexOf(".") !== -1) {
+    return;
+  }
+  //convert a number to exponential if the input is greater than or equal to 20
+  else if (firstNumberDuplicate.length >= 20) {
+    mainScreenDisplay += e.key;
+    firstNumberDuplicate = mainScreenDisplay;
+    mainScreen.textContent = convertToExponential(mainScreenDisplay);
+  } else {
+    //check if the user clicks on decimal (.) and the input is empty
+    //add 0 as initial value followed by a decimal
+    if (e.key == "." && mainScreenDisplay == "") {
+      mainScreenDisplay += 0 + ".";
+      firstNumberDuplicate = mainScreenDisplay;
+      mainScreen.textContent = mainScreenDisplay;
+    }
+    //checks if the user selects 0 and the initial value is empty
+    //set the initial value of the content to 0
+    else if (e.key == "0" && mainScreenDisplay == "") {
+      mainScreen.textContent = 0;
+      console.log("test");
+      return;
+    }
+    //add the numbers into the input
+    else {
+      mainScreenDisplay += e.key;
+      firstNumberDuplicate = mainScreenDisplay;
+      mainScreen.textContent = mainScreenDisplay;
+    }
+  }
+  console.log(mainScreen.textContent);
+}
+
 function convertToExponential(number) {
   return parseFloat(number).toExponential(2);
 }
@@ -147,6 +211,18 @@ function updateSecondScreen(e) {
   calculate();
   firstNumber = mainScreen.textContent;
   operator = e.target.textContent;
+  secondScreenDisplay = `${firstNumber} ${operator}`;
+  secondScreen.textContent = secondScreenDisplay;
+  mainScreenDisplay = "";
+}
+function updateSecondScreenByKey(e) {
+  calculate();
+  if (e.key == "/") {
+    operator = "÷";
+  } else {
+    operator = e.key;
+  }
+  firstNumber = mainScreen.textContent;
   secondScreenDisplay = `${firstNumber} ${operator}`;
   secondScreen.textContent = secondScreenDisplay;
   mainScreenDisplay = "";
@@ -185,3 +261,16 @@ operators.forEach((operator) =>
 
 clearButton.addEventListener("click", clear);
 equalButton.addEventListener("click", calculate);
+window.addEventListener("keydown", (e) => {
+  //displayInputByKeyboard(e);
+  console.log(e.key);
+  if (parseInt(e.key) >= 0 || parseInt(e.key) <= 9 || e.key == ".") {
+    displayInputByKeyboard(e);
+  } else if (e.key == "+" || e.key == "-" || e.key == "x" || e.key == "/") {
+    updateSecondScreenByKey(e);
+  } else if (e.key == "=" || e.key == "Enter") {
+    calculate();
+  } else if (e.key == "Backspace") {
+    clear();
+  }
+});
